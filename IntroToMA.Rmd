@@ -1,0 +1,45 @@
+---
+author: Reza Amiri, BA, MSc, PhD
+date: '2021-10-26'
+title: An Introduction to Meta-Analysis with R
+output:
+  html_document:
+    number_sections: true
+    toc: true
+    toc_depth: 2.0
+fontsize: 11pt
+citecolor: blue
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# What is a meta-analysis (MA)?
+
+## Definition
+
+> Meta-analysis can be understood as a form of survey research in which research reports, rather than people, are surveyed. [^1]
+
+[^1]: Lipsey, M. W., & Wilson, D. B. (2001). *Practical meta-analysis*. SAGE publications, Inc.
+
+# R and RStudio
+
+## R
+
+R is a free software environment for statistical computing and graphics. R software can be downloaded [here](https://www.r-project.org/). The most recent version of R is 4.1.1 (Kick Things) and has been released on 2021-08-10. However, some packages that I frequently use do not support the newest version of R. Facilitating this issue, I use version 3.6.3 on my system.
+
+Nonetheless, you are able to install and use multiple version of R on your system and using RStudio you can switch back and forth to any version of R based on your needs.
+
+To get help using R access their webpage [here](https://www.r-project.org/help.html).
+
+## RStudio
+
+RStudio's mission is to create free and open-source software for data science, scientific research, and technical communication. Inspired by innovators in science, education, government, and industry, RStudio develops free and open tools for R, and enterprise-ready professional products for teams who use both R and Python, to scale and share their work. RStudio Integrated development environment (IDE) can be downloaded [here](https://www.rstudio.com/products/rstudio/download/). We are using RStudio for this workshop.
+
+# Best packages to conduct a MA
+
+# Data Preparation
+
+# Hands-on practice
