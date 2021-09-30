@@ -40,6 +40,8 @@ RStudio's mission is to create free and open-source software for data science, s
 
 # Best packages to conduct a MA
 
+The best packages are:
+
 # Data Preparation
 
 # Hands-on practice
