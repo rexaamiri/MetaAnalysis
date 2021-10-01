@@ -7,24 +7,23 @@ output:
     number_sections: true
     toc: true
     toc_depth: 2.0
-fontsize: 11pt
+toc-title: "Outline"
+fontsize: 10pt
 citecolor: blue
-urlcolor: blue
+urlcolor: red
+bibliography: references.bib
+biblio-title: References
+csl: apa.csl
+link-citations: true
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# What is a meta-analysis (MA)?
+# Making Everything Ready
 
-## Definition
-
-> Meta-analysis can be understood as a form of survey research in which research reports, rather than people, are surveyed. [^1]
-
-[^1]: Lipsey, M. W., & Wilson, D. B. (2001). *Practical meta-analysis*. SAGE publications, Inc.
-
-# R and RStudio
+Visit this [link](https://learnr-examples.shinyapps.io/ex-setup-r/ "To setup R, RStudio IDE, and guide to install packages") to find out how to install R, RStudio IDE, and install R packages.
 
 ## R
 
@@ -38,6 +37,16 @@ To get help using R access their webpage [here](https://www.r-project.org/help.h
 
 RStudio's mission is to create free and open-source software for data science, scientific research, and technical communication. Inspired by innovators in science, education, government, and industry, RStudio develops free and open tools for R, and enterprise-ready professional products for teams who use both R and Python, to scale and share their work. RStudio Integrated development environment (IDE) can be downloaded [here](https://www.rstudio.com/products/rstudio/download/). We are using RStudio for this workshop.
 
+# What is a meta-analysis (MA)?
+
+## Definition
+
+The definition by one of its founding father:
+
+> "Analysis of analyses" [@glass1976]
+
+> "Meta-analysis can be understood as a form of survey research in which research reports, rather than people, are surveyed." [@lipsey2001]
+
 # Best packages to conduct a MA
 
 The best packages are:
@@ -45,3 +54,7 @@ The best packages are:
 # Data Preparation
 
 # Hands-on practice
+
+Some text
+
+# References

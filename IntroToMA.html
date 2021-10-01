@@ -58,6 +58,28 @@ if (window.hljs) {
 
 
 
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 
 
@@ -172,42 +194,49 @@ pre code {
 </div>
 
 <div id="TOC">
+<h2 id="toc-title">Outline</h2>
 <ul>
-<li><a href="#what-is-a-meta-analysis-ma"><span class="toc-section-number">1</span> What is a meta-analysis (MA)?</a>
+<li><a href="#making-everything-ready"><span class="toc-section-number">1</span> Making Everything Ready</a>
 <ul>
-<li><a href="#definition"><span class="toc-section-number">1.1</span> Definition</a></li>
+<li><a href="#r"><span class="toc-section-number">1.1</span> R</a></li>
+<li><a href="#rstudio"><span class="toc-section-number">1.2</span> RStudio</a></li>
 </ul></li>
-<li><a href="#r-and-rstudio"><span class="toc-section-number">2</span> R and RStudio</a>
+<li><a href="#what-is-a-meta-analysis-ma"><span class="toc-section-number">2</span> What is a meta-analysis (MA)?</a>
 <ul>
-<li><a href="#r"><span class="toc-section-number">2.1</span> R</a></li>
-<li><a href="#rstudio"><span class="toc-section-number">2.2</span> RStudio</a></li>
+<li><a href="#definition"><span class="toc-section-number">2.1</span> Definition</a></li>
 </ul></li>
 <li><a href="#best-packages-to-conduct-a-ma"><span class="toc-section-number">3</span> Best packages to conduct a MA</a></li>
 <li><a href="#data-preparation"><span class="toc-section-number">4</span> Data Preparation</a></li>
 <li><a href="#hands-on-practice"><span class="toc-section-number">5</span> Hands-on practice</a></li>
+<li><a href="#references">References</a></li>
 </ul>
 </div>
 
-<div id="what-is-a-meta-analysis-ma" class="section level1" number="1">
-<h1 number="1"><span class="header-section-number">1</span> What is a meta-analysis (MA)?</h1>
-<div id="definition" class="section level2" number="1.1">
-<h2 number="1.1"><span class="header-section-number">1.1</span> Definition</h2>
-<blockquote>
-<p>Meta-analysis can be understood as a form of survey research in which research reports, rather than people, are surveyed. <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
-</blockquote>
-</div>
-</div>
-<div id="r-and-rstudio" class="section level1" number="2">
-<h1 number="2"><span class="header-section-number">2</span> R and RStudio</h1>
-<div id="r" class="section level2" number="2.1">
-<h2 number="2.1"><span class="header-section-number">2.1</span> R</h2>
+<div id="making-everything-ready" class="section level1" number="1">
+<h1 number="1"><span class="header-section-number">1</span> Making Everything Ready</h1>
+<p>Visit this <a href="https://learnr-examples.shinyapps.io/ex-setup-r/" title="To setup R, RStudio IDE, and guide to install packages">link</a> to find out how to install R, RStudio IDE, and install R packages.</p>
+<div id="r" class="section level2" number="1.1">
+<h2 number="1.1"><span class="header-section-number">1.1</span> R</h2>
 <p>R is a free software environment for statistical computing and graphics. R software can be downloaded <a href="https://www.r-project.org/">here</a>. The most recent version of R is 4.1.1 (Kick Things) and has been released on 2021-08-10. However, some packages that I frequently use do not support the newest version of R. Facilitating this issue, I use version 3.6.3 on my system.</p>
 <p>Nonetheless, you are able to install and use multiple version of R on your system and using RStudio you can switch back and forth to any version of R based on your needs.</p>
 <p>To get help using R access their webpage <a href="https://www.r-project.org/help.html">here</a>.</p>
 </div>
-<div id="rstudio" class="section level2" number="2.2">
-<h2 number="2.2"><span class="header-section-number">2.2</span> RStudio</h2>
+<div id="rstudio" class="section level2" number="1.2">
+<h2 number="1.2"><span class="header-section-number">1.2</span> RStudio</h2>
 <p>RStudio’s mission is to create free and open-source software for data science, scientific research, and technical communication. Inspired by innovators in science, education, government, and industry, RStudio develops free and open tools for R, and enterprise-ready professional products for teams who use both R and Python, to scale and share their work. RStudio Integrated development environment (IDE) can be downloaded <a href="https://www.rstudio.com/products/rstudio/download/">here</a>. We are using RStudio for this workshop.</p>
+</div>
+</div>
+<div id="what-is-a-meta-analysis-ma" class="section level1" number="2">
+<h1 number="2"><span class="header-section-number">2</span> What is a meta-analysis (MA)?</h1>
+<div id="definition" class="section level2" number="2.1">
+<h2 number="2.1"><span class="header-section-number">2.1</span> Definition</h2>
+<p>The definition by one of its founding father:</p>
+<blockquote>
+<p>“Analysis of analyses” <span class="citation">(<a href="#ref-glass1976" role="doc-biblioref">Glass, 1976</a>)</span></p>
+</blockquote>
+<blockquote>
+<p>“Meta-analysis can be understood as a form of survey research in which research reports, rather than people, are surveyed.” <span class="citation">(<a href="#ref-lipsey2001" role="doc-biblioref">Lipsey &amp; Wilson, 2001</a>)</span></p>
+</blockquote>
 </div>
 </div>
 <div id="best-packages-to-conduct-a-ma" class="section level1" number="3">
@@ -219,12 +248,18 @@ pre code {
 </div>
 <div id="hands-on-practice" class="section level1" number="5">
 <h1 number="5"><span class="header-section-number">5</span> Hands-on practice</h1>
+<p>Some text</p>
 </div>
-<div class="footnotes">
-<hr />
-<ol>
-<li id="fn1"><p>Lipsey, M. W., &amp; Wilson, D. B. (2001). <em>Practical meta-analysis</em>. SAGE publications, Inc.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
-</ol>
+<div id="references" class="section level1 unnumbered">
+<h1 class="unnumbered">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-glass1976" class="csl-entry">
+Glass, G. V. (1976). Primary, Secondary, and Meta-Analysis of Research. <em>Educational Researcher</em>, <em>5</em>(10), 3–8. <a href="https://doi.org/10.3102/0013189x005010003">https://doi.org/10.3102/0013189x005010003</a>
+</div>
+<div id="ref-lipsey2001" class="csl-entry">
+Lipsey, M. W., &amp; Wilson, D. B. (2001). <em>Practical meta-analysis.</em> SAGE publications, Inc.
+</div>
+</div>
 </div>
 
 
