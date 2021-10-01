@@ -1,11 +1,14 @@
 ---
-author: Reza Amiri, BA, MSc, PhD
+author: Mohammadreza Amiri, BA, MSc, PhD
 date: '2021-10-26'
 title: An Introduction to Meta-Analysis with R
 output:
-  html_document:
+  prettydoc::html_pretty:
+    theme: hpstr
+    highlight: github
     number_sections: true
     toc: true
+    #toc_float: true
     toc_depth: 2.0
 toc-title: "Outline"
 fontsize: 10pt
@@ -18,6 +21,18 @@ link-citations: true
 ---
 
 ```{r setup, include=FALSE}
+library(knitr)
+
+# Global options
+options(max.print="75")
+opts_chunk$set(echo=FALSE,
+	             cache=TRUE,
+               prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+opts_knit$set(width=75)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -41,7 +56,7 @@ RStudio's mission is to create free and open-source software for data science, s
 
 ## Definition
 
-The definition by one of its founding father:
+The following definitions summarize the MA statistical technique:
 
 > "Analysis of analyses" [@glass1976]
 
@@ -53,8 +68,72 @@ The best packages are:
 
 # Data Preparation
 
+Loading required packages (don't forget to install the packages first if you have not done so):
+
+```{r packages, include=FALSE}
+# install.package("tidyverse", "metafor")
+library(tidyverse)
+library(metafor)
+```
+
+Let's view the data for this session:
+
+```{r data-load}
+dat <- dat.bcg
+
+knitr::kable(dat)
+```
+
+Now we need to calculate the log risk ratios and corresponding sampling variances (and use the 'slab' argument to store study labels as part of the data frame):
+
+```{r data-preparation}
+dat <- escalc(measure="RR", 
+              ai=tpos, 
+              bi=tneg, 
+              ci=cpos, 
+              di=cneg, 
+              data=dat,
+              slab=paste(author, year, sep=", "))
+
+dat %>% 
+    select(trial, author, year, yi, vi) %>% 
+    knitr::kable()
+```
+
+Effect size (*yi*): Log(RR)
+
+Standard error of effect size (*vi*): Standard Error Log(RR)
+
 # Hands-on practice
 
-Some text
+```{r forest-plot}
+
+# Fitting a random-effects model
+res <- rma(yi, vi, data=dat)
+ 
+
+# Forest plot combined with (necessary) annotations
+forest(res, atransf=exp, at=log(c(.05, .25, 1, 4)), xlim=c(-16,6),
+       ilab=cbind(dat.bcg$tpos, dat.bcg$tneg, dat.bcg$cpos, dat.bcg$cneg),
+       ilab.xpos=c(-9.5,-8,-6,-4.5), cex=.75, header="Author(s) and Year",
+       mlab="")
+
+op <- par(cex=.75, font=2)
+
+text(c(-9.5,-8,-6,-4.5), 15, c("TB+", "TB-", "TB+", "TB-"))
+
+text(c(-8.75,-5.25),     16, c("Vaccinated", "Control"))
+
+par(op)
+ 
+
+# add text with Q-value, dfs, p-value, and I^2 statistic
+text(-16, -1, pos=4, cex=0.75, 
+     bquote(paste("RE Model (Q = ", .(formatC(res$QE, digits=2, format="f")), 
+                  ", df = ", .(res$k - res$p), ", p = ",
+                  .(formatC(res$QEp, digits=2, format="f")),
+                  "; ", I^2, " = ", .(formatC(res$I2, digits=1, format="f")),
+                  "%)")))
+```
 
 # References
