@@ -2,6 +2,7 @@
 author: Mohammadreza Amiri, BA, MSc, PhD
 date: '2021-10-26'
 title: An Introduction to Meta-Analysis with R
+subtitle: KITE-Trainees Workshop Series
 output:
   prettydoc::html_pretty:
     theme: hpstr
@@ -62,18 +63,20 @@ The following definitions summarize the MA statistical technique:
 
 > "Meta-analysis can be understood as a form of survey research in which research reports, rather than people, are surveyed." [@lipsey2001]
 
-# Best packages to conduct a MA
+# The Best packages to Conduct a MA
 
-The best packages are:
+In my opinion, the best packages are [meta](https://github.com/guido-s/meta/) (for ease of use and has a [book](https://www.springer.com/gp/book/9783319214153)) and [metafor](https://www.metafor-project.org/doku.php) for best documentation (after installation type `vignette("metafor")`).
 
 # Data Preparation
 
 Loading required packages (don't forget to install the packages first if you have not done so):
 
 ```{r packages, include=FALSE}
-# install.package("tidyverse", "metafor")
+# install.package("tidyverse", "meta", "metafor", "openxlsx")
 library(tidyverse)
+library(meta)
 library(metafor)
+library(openxlsx)
 ```
 
 Let's view the data for this session:
@@ -102,12 +105,44 @@ dat %>%
 
 Effect size (*yi*): Log(RR)
 
-Standard error of effect size (*vi*): Standard Error Log(RR)
+Variance of effect size (*vi*): Variance Log(RR)
+
+Note [@metafor]:
+
+In various fields (such as the health and medical sciences), the response variable measured is often dichotomous (binary), so that the data from a study comparing two different groups can be expressed in terms of a table, such as:
+
+|         | Outcome 1 | Outcome 2 | Total |
+|---------|-----------|-----------|-------|
+| Group 1 | ai        | bi        | n1i   |
+| Group 2 | ci        | di        | n2i   |
+
+: Example of dichotomous outcomes
+
+where ai, bi, ci, and di denote the cell frequencies (i.e., the number of people falling into a particular category) and n1i and n2i are the row totals (i.e., the group sizes).
+
+For example, in a set of randomized clinical trials, group 1 and group 2 may refer to the treatment and placebo/control group, respectively, with outcome 1 denoting some event of interest (e.g., death, complications, failure to improve under the treatment) and outcome 2 its complement. Similarly, in a set of cohort studies, group 1 and group 2 may denote those who engage in and those who do not engage in a potentially harmful behavior (e.g., smoking), with outcome 1 denoting the development of a particular disease (e.g., lung cancer) during the follow-up period. Finally, in a set of case-control studies, group 1 and group 2 may refer to those with the disease (i.e., cases) and those free of the disease (i.e., controls), with outcome 1 denoting, for example, exposure to some environmental risk factor in the past and outcome 2 non-exposure. Note that in all of these examples, the stratified sampling scheme fixes the row totals (i.e., the group sizes) by design.
+
+A meta-analysis of studies reporting results in terms of tables can be based on one of several different outcome measures, including the risk ratio (also called the relative risk), the odds ratio, the risk difference, and the arcsine square root transformed risk difference [@Rücker2009]. For any of these outcome measures, one needs to specify the cell frequencies via the ai, bi, ci, and di arguments (or alternatively, one can use the ai, ci, n1i, and n2i arguments).
+
+The options for the measure argument are then:
+
+"RR" for the log risk ratio,
+
+"OR" for the log odds ratio,
+
+"RD" for the risk difference,
+
+"AS" for the arcsine square root transformed risk difference [@Rücker2009],
+
+"PETO" for the log odds ratio estimated with Peto's method [@Yusuf1985].
+
+Note that the log is taken of the risk ratio and the odds ratio, which makes these outcome measures symmetric around 0 and yields corresponding sampling distributions that are closer to normality. Also, when multiplied by 2, the arcsine square root transformed risk difference is actually identical to Cohen's h [@cohen1977].
 
 # Hands-on practice
 
-```{r forest-plot}
+## Forest Plot
 
+```{r forest-plot}
 # Fitting a random-effects model
 res <- rma(yi, vi, data=dat)
  
@@ -134,6 +169,45 @@ text(-16, -1, pos=4, cex=0.75,
                   .(formatC(res$QEp, digits=2, format="f")),
                   "; ", I^2, " = ", .(formatC(res$I2, digits=1, format="f")),
                   "%)")))
+```
+
+```{r forest-plot-ordered}
+
+# Fitting a random-effects model
+res <- rma(yi, vi, data=dat)
+ 
+
+# Forest plot combined with (necessary) annotations
+forest(res, atransf=exp, at=log(c(.05, .25, 1, 4)), xlim=c(-16,6),
+       ilab=cbind(dat.bcg$tpos, dat.bcg$tneg, dat.bcg$cpos, dat.bcg$cneg),
+       ilab.xpos=c(-9.5,-8,-6,-4.5), cex=.75, header="Author(s) and Year",
+       mlab="", order="obs")
+
+op <- par(cex=.75, font=2)
+
+text(c(-9.5,-8,-6,-4.5), 15, c("TB+", "TB-", "TB+", "TB-"))
+
+text(c(-8.75,-5.25),     16, c("Vaccinated", "Control"))
+
+par(op)
+ 
+
+# add text with Q-value, dfs, p-value, and I^2 statistic
+text(-16, -1, pos=4, cex=0.75, 
+     bquote(paste("RE Model (Q = ", .(formatC(res$QE, digits=2, format="f")), 
+                  ", df = ", .(res$k - res$p), ", p = ",
+                  .(formatC(res$QEp, digits=2, format="f")),
+                  "; ", I^2, " = ", .(formatC(res$I2, digits=1, format="f")),
+                  "%)")))
+```
+
+## Funnel Plot
+
+A [funnel plot](https://en.wikipedia.org/wiki/funnel%20plot "https://en.wikipedia.org/wiki/funnel plot") shows the observed effect sizes or outcomes on the x-axis against a precision measure of the observed effect sizes on the y-axis. In metafor package, the recommended choice for the y-axis is the standard error (in decreasing order) which is in line with @Sterne2001. If there is no publication bias or heterogeneity among studies, the expectation is to see all points to fall within the pseudo-confidence shape funnel, i.e., the triangle shape funnel for the case of standard errors on the y-axis.
+
+```{r funnel-plot}
+funnel(res, main="Standard Error")
+funnel(res, yaxis="seinv", main="Inverse Standard Error")
 ```
 
 # References
