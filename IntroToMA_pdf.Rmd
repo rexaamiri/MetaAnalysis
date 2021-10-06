@@ -1,25 +1,26 @@
 ---
-author: Mohammadreza Amiri, BA, MSc, PhD
+author: Mohammadreza Amiri
 date: '2021-10-26'
-title: An Introduction to Meta-Analysis with R
+title: Introduction to Meta-Analysis with R
 subtitle: KITE-Trainees Workshop Series
-output:
-  prettydoc::html_pretty:
-    theme: hpstr
-    highlight: github
+output: 
+  bookdown::pdf_document2:
+    fig_width: 7.0
     number_sections: true
-    toc: true
-    #toc_float: true
+    fig_height: 5.0
     toc_depth: 2.0
-toc-title: "Outline"
-fontsize: 10pt
+    fig_caption: true
+    toc: true
+fontsize: 11pt
+linkcolor: blue
 citecolor: blue
-urlcolor: red
-bibliography: references.bib
+urlcolor: blue
 biblio-title: References
+bibliography: references.bib
 csl: apa.csl
 link-citations: true
 ---
+
 
 ```{r setup, include=FALSE}
 library(knitr)
@@ -44,11 +45,7 @@ Visit this [link](https://learnr-examples.shinyapps.io/ex-setup-r/ "To setup R, 
 
 ## R
 
-R is a free software environment for statistical computing and graphics. R software can be downloaded [here](https://www.r-project.org/). The most recent version of R is 4.1.1 (Kick Things) and has been released on 2021-08-10. However, some packages that I frequently use do not support the newest version of R. Facilitating this issue, I use version 3.6.3 on my system.
-
-Nonetheless, you are able to install and use multiple version of R on your system and using RStudio you can switch back and forth to any version of R based on your needs.
-
-To get help using R access their webpage [here](https://www.r-project.org/help.html).
+R is a free software environment for statistical computing and graphics. R software can be downloaded [here](https://www.r-project.org/). The most recent version of R is 4.1.1 (Kick Things) and has been released on 2021-08-10. However, some packages that I frequently use do not support the newest version of R. Facilitating this issue, I use version 3.6.3 on my system. Nonetheless, you are able to install and use multiple version of R on your system and using RStudio you can switch back and forth to any version of R based on your needs. To get help using R access their webpage [here](https://www.r-project.org/help.html).
 
 ## RStudio
 
@@ -143,7 +140,9 @@ Note that the log is taken of the risk ratio and the odds ratio, which makes the
 
 ## Forest Plot Using metafor Package
 
-```{r forest-plot, fig.align='center',fig.height=5, fig.width=10, fig.cap="Forest Plot"}
+### Unordered Forest Plot
+
+```{r forest-plot, fig.align='center', fig.height=5, fig.width=10, fig.cap="Unordered Forest Plot"}
 # Fitting a random-effects model
 res <- rma(yi, vi, data=ex1data)
  
@@ -177,7 +176,9 @@ text(-16, -1, pos=4, cex=0.75,
                   "%)")))
 ```
 
-```{r forest-plot-ordered, fig.align='center',fig.height=5, fig.width=10}
+### Ordered Forest Plot
+
+```{r forest-plot-ordered, fig.align='center', fig.height=5, fig.width=10, fig.cap="Ordered Forest Plot"}
 
 # Fitting a random-effects model
 res <- rma(yi, vi, data=ex1data)
@@ -214,7 +215,7 @@ text(-16, -1, pos=4, cex=0.75,
 
 ## Forest Plot Using meta Package
 
-```{r, fig.align='center',fig.height=5, fig.width=10}
+```{r, fig.align='center', fig.height=5, fig.width=10, fig.cap="Forest Plot Using meta Package"}
 nfr <- read.xlsx(xlsxFile = "NFR_v_Control_final.xlsx")
 
 nfrModel <- metacont(data=nfr, 
@@ -234,14 +235,14 @@ forest(x = nfrModel, comb.random = F, digits.mean = 1, digits.sd = 1)
 
 A [funnel plot](https://en.wikipedia.org/wiki/funnel%20plot "https://en.wikipedia.org/wiki/funnel plot") shows the observed effect sizes or outcomes on the x-axis against a precision measure of the observed effect sizes on the y-axis. In metafor package, the recommended choice for the y-axis is the standard error (in decreasing order) which is in line with @Sterne2001. If there is no publication bias or heterogeneity among studies, the expectation is to see all points to fall within the pseudo-confidence shape funnel, i.e., the triangle shape funnel for the case of standard errors on the y-axis.
 
-```{r funnel-plot}
+```{r funnel-plot, fig.align='center', fig.cap="Common Funnel Plots"}
 funnel(res, main="Standard Error")
 funnel(res, yaxis="seinv", main="Inverse Standard Error")
 ```
 
 ## Funnel Plot Using meta Package
 
-```{r funnel-plot-meta}
+```{r funnel-plot-meta, fig.align='center', fig.cap="Common Funnel Plots Using meta Package"}
 nfr <- read.xlsx(xlsxFile = "NFR_v_Control_final.xlsx")
 
 nfrModel <- metacont(data=nfr, 
