@@ -28,7 +28,7 @@ library(knitr)
 # Global options
 options(max.print="75")
 opts_chunk$set(echo=FALSE,
-	           cache=TRUE,
+               cache=TRUE,
                prompt=FALSE,
                tidy=TRUE,
                tidy.opts=list(width.cutoff=60),
@@ -97,8 +97,8 @@ ex1data <- escalc(measure="RR",
                   slab=paste(author, year, sep=", "))
 
 ex1data %>% 
-    select(trial, author, year, yi, vi) %>% 
-    knitr::kable()
+  select(trial, author, year, yi, vi) %>% 
+  knitr::kable()
 ```
 
 Effect size (*yi*): Log(RR)
@@ -145,7 +145,7 @@ Note that the log is taken of the risk ratio and the odds ratio, which makes the
 ```{r forest-plot, fig.align='center', fig.height=5, fig.width=10, fig.cap="Unordered Forest Plot"}
 # Fitting a random-effects model
 res <- rma(yi, vi, data=ex1data)
- 
+
 
 # Forest plot combined with (necessary) annotations
 forest(res, atransf=exp, 
@@ -163,7 +163,7 @@ text(c(-9.5,-8,-6,-4.5), 15, c("TB+", "TB-", "TB+", "TB-"))
 text(c(-8.75,-5.25),     16, c("Vaccinated", "Control"))
 
 par(op)
- 
+
 
 # add text with Q-value, dfs, p-value, and I^2 statistic
 text(-16, -1, pos=4, cex=0.75, 
@@ -182,7 +182,7 @@ text(-16, -1, pos=4, cex=0.75,
 
 # Fitting a random-effects model
 res <- rma(yi, vi, data=ex1data)
- 
+
 
 # Forest plot combined with (necessary) annotations
 forest(res, atransf=exp, at=log(c(.05, .25, 1, 4)), 
@@ -200,7 +200,7 @@ text(c(-9.5,-8,-6,-4.5), 15, c("TB+", "TB-", "TB+", "TB-"))
 text(c(-8.75,-5.25),     16, c("Vaccinated", "Control"))
 
 par(op)
- 
+
 
 # add text with Q-value, dfs, p-value, and I^2 statistic
 text(-16, -1, pos=4, cex=0.75, 
