@@ -24,6 +24,7 @@ link-citations: true
 
 ```{r setup, include=FALSE}
 library(knitr)
+library(flextable)
 
 # Global options
 options(max.print="75")
@@ -96,9 +97,21 @@ ex1data <- escalc(measure="RR",
                   data=dat,
                   slab=paste(author, year, sep=", "))
 
+# set_flextable_defaults(
+#   font.family = "Arial",
+#   font.size = 10,
+#   font.color = "black",
+#   table.layout = "autofit",
+#   digits = 3,
+#   theme_fun = ""
+#   )
+
 ex1data %>% 
-  select(trial, author, year, yi, vi) %>% 
-  knitr::kable()
+  select(trial, author, year, yi, vi) %>% head(5) %>% 
+  flextable() %>% set_caption("Effect size and variance") %>% 
+  set_table_properties(layout = "autofit") %>% 
+  colformat_double(digits = 3) %>%
+  theme_booktabs()
 ```
 
 Effect size (*yi*): Log(RR)
